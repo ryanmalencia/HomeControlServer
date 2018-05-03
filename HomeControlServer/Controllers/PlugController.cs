@@ -8,16 +8,23 @@ namespace HomeControlServer.Controllers
     [EnableCors("*", "*", "*")]
     public class PlugController : ApiController
     {
-        [Route("api/plug/getalldevices")]
+        [Route("api/plug/get/alldevices")]
         [HttpGet]
         public IHttpActionResult GetAllDevices()
         {
             return null;
         }
 
-        [Route("api/plug/getdevice/{id}")]
+        [Route("api/plug/get/device/{id}")]
         [HttpGet]
         public IHttpActionResult GetDevice(int id)
+        {
+            return null;
+        }
+
+        [Route("api/plug/get/status/{id}")]
+        [HttpGet]
+        public IHttpActionResult GetStatus(int id)
         {
             return null;
         }
