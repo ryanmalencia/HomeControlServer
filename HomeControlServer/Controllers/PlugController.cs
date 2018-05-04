@@ -2,24 +2,27 @@
 using System.Web.Http.Cors;
 using Newtonsoft.Json;
 using HomeControlServer.Models;
+using HomeControlServer.Logic;
 
 namespace HomeControlServer.Controllers
 {
     [EnableCors("*", "*", "*")]
     public class PlugController : ApiController
     {
+        private PlugLogic PlugLogic = new PlugLogic();
+
         [Route("api/plug/get/all")]
         [HttpGet]
         public IHttpActionResult GetAll()
         {
-            return null;
+            return Ok(PlugLogic.GetAll());
         }
 
         [Route("api/plug/get/{id}")]
         [HttpGet]
         public IHttpActionResult Get(int id)
         {
-            return null;
+            return Ok(PlugLogic.Get(id));
         }
 
         [Route("api/plug/get/status/{id}")]
@@ -33,14 +36,14 @@ namespace HomeControlServer.Controllers
         [HttpPut]
         public IHttpActionResult Add(Plug device)
         {
-            return null;
+            return Ok(PlugLogic.Add(device));
         }
 
         [Route("api/plug/delete/{id}")]
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
-            return null;
+            return Ok(PlugLogic.Delete(id));
         }
 
         [Route("api/plug/updatedevice/")]
