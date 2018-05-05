@@ -254,7 +254,9 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>50376</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:50376/</IISUrl>
+          <IISUrl>http://10.0.0.136:50376/</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://10.0.0.136:50376/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

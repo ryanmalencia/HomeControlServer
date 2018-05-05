@@ -21,6 +21,11 @@ namespace HomeControlServer.Logic
             return PlugDB.Get(id);
         }
 
+        public int GetID(string ip)
+        {
+            return PlugDB.GetID(ip);
+        }
+
         public int Add(Plug plug)
         {
             return PlugDB.Add(plug);

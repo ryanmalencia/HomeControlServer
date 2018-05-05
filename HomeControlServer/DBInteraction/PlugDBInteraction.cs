@@ -32,6 +32,19 @@ namespace HomeControlServer.DBInteraction
             return DB.Plugs.FirstOrDefault(a => a.PlugID == id);
         }
 
+        public int GetID(string ip)
+        {
+            Plug temp = DB.Plugs.FirstOrDefault(a => a.IP == ip);
+            if(temp == null)
+            {
+                return 0;
+            }
+            else
+            {
+                return temp.PlugID;
+            }
+        }
+
         public int Add(Plug plug)
         {
             DB.Plugs.Add(plug);

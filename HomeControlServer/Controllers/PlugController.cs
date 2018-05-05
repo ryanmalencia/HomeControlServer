@@ -32,6 +32,13 @@ namespace HomeControlServer.Controllers
             return null;
         }
 
+        [Route("api/plug/getid/")]
+        [HttpGet]
+        public IHttpActionResult GetID(string IP)
+        {
+            return Ok(PlugLogic.GetID(IP));
+        }
+
         [Route("api/plug/add/")]
         [HttpPut]
         public IHttpActionResult Add(Plug device)
