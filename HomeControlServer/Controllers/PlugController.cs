@@ -1,6 +1,5 @@
 ﻿using System.Web.Http;
 using System.Web.Http.Cors;
-using Newtonsoft.Json;
 using HomeControlServer.Models;
 using HomeControlServer.Logic;
 
@@ -29,7 +28,7 @@ namespace HomeControlServer.Controllers
         [HttpGet]
         public IHttpActionResult GetStatus(int id)
         {
-            return null;
+            return Ok(PlugLogic.SendData(id, "/status"));
         }
 
         [Route("api/plug/getid/")]
