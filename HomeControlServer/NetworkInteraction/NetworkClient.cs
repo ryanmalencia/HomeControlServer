@@ -20,7 +20,6 @@ namespace HomeControlServer.NetworkInteraction
                     returnString = http;
                 }
             }
-
             return returnString;
         }
     }

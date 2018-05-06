@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using HomeControlServer.DAL;
 using HomeControlServer.Models;
 using HomeControlServer.NetworkInteraction;
@@ -13,11 +10,18 @@ namespace HomeControlServer.DBInteraction
     {
         private DataContext DB;
 
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public PlugDBInteraction()
         {
             DB = new DataContext();
         }
 
+        /// <summary>
+        /// Get all plug objects from DB
+        /// </summary>
+        /// <returns>Collection of plugs</returns>
         public PlugCollection GetAll()
         {
             PlugCollection Plugs = new PlugCollection();
@@ -28,11 +32,21 @@ namespace HomeControlServer.DBInteraction
             return Plugs;
         }
 
+        /// <summary>
+        /// Get plug object from DB
+        /// </summary>
+        /// <param name="id">ID of plug</param>
+        /// <returns>Desired plug obkect</returns>
         public Plug Get(int id)
         {
             return DB.Plugs.FirstOrDefault(a => a.PlugID == id);
         }
 
+        /// <summary>
+        /// Get ID of plug for corresponding IP from DB
+        /// </summary>
+        /// <param name="ip">IP of plug</param>
+        /// <returns>ID of corresponding plug</returns>
         public int GetID(string ip)
         {
             Plug temp = DB.Plugs.FirstOrDefault(a => a.IP == ip);
@@ -46,6 +60,11 @@ namespace HomeControlServer.DBInteraction
             }
         }
 
+        /// <summary>
+        /// Add new plug to the DB
+        /// </summary>
+        /// <param name="plug">Plug object to add</param>
+        /// <returns>ID in DB of added plug</returns>
         public int Add(Plug plug)
         {
             DB.Plugs.Add(plug);
@@ -60,6 +79,11 @@ namespace HomeControlServer.DBInteraction
             return plug.PlugID;
         }
 
+        /// <summary>
+        /// Delete plug from DB
+        /// </summary>
+        /// <param name="id">ID of plug to delete</param>
+        /// <returns>Success/failure</returns>
         public bool Delete(int id)
         {
             Plug temp = new Plug(id);
@@ -76,108 +100,21 @@ namespace HomeControlServer.DBInteraction
             return true;
         }
 
+        /// <summary>
+        /// Send network request to plug
+        /// </summary>
+        /// <param name="id">ID of plug</param>
+        /// <param name="call">Network call</param>
+        /// <returns>Data returned from plug</returns>
         public string SendData(int id, string call)
         {
             string returnString = "";
-
             Plug plug = this.Get(id);
-
             if (plug != null)
             {
                 string http = "http://" + plug.IP + call;
                 returnString = NetworkClient.GetResponse(http, "GET");
             }
-
-            return returnString;
-        }
-
-        public string TurnOneOn(int id)
-        {
-            string returnString = "";
-
-            Plug plug = this.Get(id);
-
-            if (plug != null)
-            {
-                string http = "http://" + plug.IP + "/1/on";
-                returnString = NetworkClient.GetResponse(http, "GET");
-            }
-
-            return returnString;
-        }
-
-        public string TurnOneOff(int id)
-        {
-            string returnString = "";
-
-            Plug plug = this.Get(id);
-
-            if (plug != null)
-            {
-                string http = "http://" + plug.IP + "/1/off";
-                returnString = NetworkClient.GetResponse(http, "GET");
-            }
-
-            return returnString;
-        }
-
-        public string TurnTwoOn(int id)
-        {
-            string returnString = "";
-
-            Plug plug = this.Get(id);
-
-            if (plug != null)
-            {
-                string http = "http://" + plug.IP + "/2/on";
-                returnString = NetworkClient.GetResponse(http, "GET");
-            }
-
-            return returnString;
-        }
-
-        public string TurnTwoOff(int id)
-        {
-            string returnString = "";
-
-            Plug plug = this.Get(id);
-
-            if (plug != null)
-            {
-                string http = "http://" + plug.IP + "/2/off";
-                returnString = NetworkClient.GetResponse(http, "GET");
-            }
-
-            return returnString;
-        }
-
-        public string TurnAllOn(int id)
-        {
-            string returnString = "";
-
-            Plug plug = this.Get(id);
-
-            if (plug != null)
-            {
-                string http = "http://" + plug.IP + "/on";
-                returnString = NetworkClient.GetResponse(http, "GET");
-            }
-
-            return returnString;
-        }
-
-        public string TurnAllOff(int id)
-        {
-            string returnString = "";
-
-            Plug plug = this.Get(id);
-
-            if (plug != null)
-            {
-                string http = "http://" + plug.IP + "/off";
-                returnString = NetworkClient.GetResponse(http, "GET");
-            }
-
             return returnString;
         }
     }
