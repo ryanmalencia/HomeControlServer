@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using HomeControlServer.DAL;
 using HomeControlServer.Models;
+using HomeControlServer.NetworkInteraction;
 using System.Data.Entity.Infrastructure;
 
 namespace HomeControlServer.DBInteraction
@@ -73,6 +74,111 @@ namespace HomeControlServer.DBInteraction
                 return false;
             }
             return true;
+        }
+
+        public string SendData(int id, string call)
+        {
+            string returnString = "";
+
+            Plug plug = this.Get(id);
+
+            if (plug != null)
+            {
+                string http = "http://" + plug.IP + call;
+                returnString = NetworkClient.GetResponse(http, "GET");
+            }
+
+            return returnString;
+        }
+
+        public string TurnOneOn(int id)
+        {
+            string returnString = "";
+
+            Plug plug = this.Get(id);
+
+            if (plug != null)
+            {
+                string http = "http://" + plug.IP + "/1/on";
+                returnString = NetworkClient.GetResponse(http, "GET");
+            }
+
+            return returnString;
+        }
+
+        public string TurnOneOff(int id)
+        {
+            string returnString = "";
+
+            Plug plug = this.Get(id);
+
+            if (plug != null)
+            {
+                string http = "http://" + plug.IP + "/1/off";
+                returnString = NetworkClient.GetResponse(http, "GET");
+            }
+
+            return returnString;
+        }
+
+        public string TurnTwoOn(int id)
+        {
+            string returnString = "";
+
+            Plug plug = this.Get(id);
+
+            if (plug != null)
+            {
+                string http = "http://" + plug.IP + "/2/on";
+                returnString = NetworkClient.GetResponse(http, "GET");
+            }
+
+            return returnString;
+        }
+
+        public string TurnTwoOff(int id)
+        {
+            string returnString = "";
+
+            Plug plug = this.Get(id);
+
+            if (plug != null)
+            {
+                string http = "http://" + plug.IP + "/2/off";
+                returnString = NetworkClient.GetResponse(http, "GET");
+            }
+
+            return returnString;
+        }
+
+        public string TurnAllOn(int id)
+        {
+            string returnString = "";
+
+            Plug plug = this.Get(id);
+
+            if (plug != null)
+            {
+                string http = "http://" + plug.IP + "/on";
+                returnString = NetworkClient.GetResponse(http, "GET");
+            }
+
+            return returnString;
+        }
+
+        public string TurnAllOff(int id)
+        {
+            string returnString = "";
+
+            Plug plug = this.Get(id);
+
+            if (plug != null)
+            {
+                string http = "http://" + plug.IP + "/off";
+                returnString = NetworkClient.GetResponse(http, "GET");
+            }
+
+            return returnString;
         }
     }
 }

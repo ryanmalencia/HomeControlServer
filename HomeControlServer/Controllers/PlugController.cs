@@ -64,42 +64,42 @@ namespace HomeControlServer.Controllers
         [HttpPost]
         public IHttpActionResult TurnOneOn(int id)
         {
-            return Ok("wow");
+            return Ok(PlugLogic.SendData(id, "/1/on"));
         }
 
         [Route("api/plug/turnoneoff/{id}")]
         [HttpPost]
         public IHttpActionResult TurnOneOff(int id)
         {
-            return null;
+            return Ok(PlugLogic.SendData(id, "/1/off"));
         }
 
         [Route("api/plug/turntwoon/{id}")]
         [HttpPost]
         public IHttpActionResult TurnTwoOn(int id)
         {
-            return null;
+            return Ok(PlugLogic.SendData(id, "/2/on"));
         }
 
         [Route("api/plug/turntwooff/{id}")]
         [HttpPost]
         public IHttpActionResult TurnTwoOff(int id)
         {
-            return null;
+            return Ok(PlugLogic.SendData(id, "/2/off"));
         }
 
         [Route("api/plug/turnallon/{id}")]
         [HttpPost]
         public IHttpActionResult TurnAllOn(int id)
         {
-            return null;
+            return Ok(PlugLogic.SendData(id, "/on"));
         }
 
         [Route("api/plug/turnalloff/{id}")]
         [HttpPost]
         public IHttpActionResult TurnAllOff(int id)
         {
-            return null;
+            return Ok(PlugLogic.SendData(id, "/off"));
         }
     }
 }

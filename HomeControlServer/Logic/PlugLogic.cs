@@ -35,5 +35,40 @@ namespace HomeControlServer.Logic
         {
             return PlugDB.Delete(id);
         }
+
+        public string SendData(int id, string call)
+        {
+            return PlugDB.SendData(id, call);
+        }
+
+        public string TurnOneOn(int id)
+        {
+            return PlugDB.TurnOneOn(id);
+        }
+
+        public string TurnOneOff(int id)
+        {
+            return PlugDB.TurnOneOff(id);
+        }
+
+        public string TurnTwoOn(int id)
+        {
+            return PlugDB.TurnTwoOn(id);
+        }
+
+        public string TurnTwoOff(int id)
+        {
+            return PlugDB.TurnTwoOff(id);
+        }
+
+        public string TurnAllOn(int id)
+        {
+            return PlugDB.TurnAllOn(id);
+        }
+
+        public string TurnAllOff(int id)
+        {
+            return PlugDB.TurnAllOff(id);
+        }
     }
 }

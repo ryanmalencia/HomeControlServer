@@ -176,6 +176,7 @@
     <Compile Include="Models\Device.cs" />
     <Compile Include="Models\Plug.cs" />
     <Compile Include="Models\PlugCollection.cs" />
+    <Compile Include="NetworkInteraction\NetworkClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
