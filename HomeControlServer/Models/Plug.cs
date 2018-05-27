@@ -20,9 +20,22 @@ namespace HomeControlServer.Models
 
         }
 
+        /// <summary>
+        /// Constructor with ID
+        /// </summary>
+        /// <param name="id">ID of plug</param>
         public Plug(int id)
         {
             PlugID = id;
+        }
+
+        /// <summary>
+        /// Get descriptive string
+        /// </summary>
+        /// <returns>Descriptive string</returns>
+        public string ToReadableString()
+        {
+            return Name + " at IP: " + IP;
         }
     }
 }

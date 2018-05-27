@@ -5,29 +5,14 @@ namespace HomeControlServer.Models
 {
     public class PlugCollection : ICollection, IModel
     {
-        public List<Plug> Plugs;
+        public List<IModel> Plugs;
 
         /// <summary>
         /// Default constructor
         /// </summary>
         public PlugCollection()
         {
-            Plugs = new List<Plug>();
-        }
-
-        /// <summary>
-        /// Add plug to collection
-        /// </summary>
-        /// <param name="plug">Plug to add</param>
-        /// <returns>Bool with success/failure</returns>
-        public bool AddPlug(Plug plug)
-        {
-            if(plug == null)
-            {
-                return false;
-            }
-            Plugs.Add(plug);
-            return true;
+            Plugs = new List<IModel>();
         }
 
         /// <summary>
@@ -43,6 +28,20 @@ namespace HomeControlServer.Models
             }
             Plugs.Add((Plug)model);
             return true;
+        }
+
+        /// <summary>
+        /// Get descriptive string of collection
+        /// </summary>
+        /// <returns>Descriptive string</returns>
+        public string ToReadableString()
+        {
+            string output = "";
+            foreach(Plug plug in Plugs)
+            {
+                output += plug.ToReadableString() + "\n";
+            }
+            return output;
         }
     }
 }
