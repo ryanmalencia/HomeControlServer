@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using HomeControlServer.DAL;
+using HomeControlServer.Interfaces;
 using HomeControlServer.Models;
 using HomeControlServer.NetworkInteraction;
 using System.Data.Entity.Infrastructure;
@@ -25,9 +26,9 @@ namespace HomeControlServer.DBInteraction
         public PlugCollection GetAll()
         {
             PlugCollection Plugs = new PlugCollection();
-            foreach(Plug plug in DB.Plugs)
+            foreach(IModel plug in DB.Plugs)
             {
-                Plugs.AddPlug(plug);
+                Plugs.Add(plug);
             }
             return Plugs;
         }

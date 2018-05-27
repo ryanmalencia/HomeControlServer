@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using HomeControlServer.Interfaces;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HomeControlServer.Models
 {
-    public class Plug
+    public class Plug : IModel
     {
         public int PlugID { get; set; }
         public string Name { get; set; }

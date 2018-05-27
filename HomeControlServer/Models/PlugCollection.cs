@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using HomeControlServer.Interfaces;
+using System.Collections.Generic;
 
 namespace HomeControlServer.Models
 {
-    public class PlugCollection
+    public class PlugCollection : ICollection, IModel
     {
         public List<Plug> Plugs;
 
@@ -26,6 +27,21 @@ namespace HomeControlServer.Models
                 return false;
             }
             Plugs.Add(plug);
+            return true;
+        }
+
+        /// <summary>
+        /// Add plug to collection
+        /// </summary>
+        /// <param name="model">IModel to add (as plug)</param>
+        /// <returns>Bool with success/failure</returns>
+        public bool Add(IModel model)
+        {
+            if(model == null)
+            {
+                return false;
+            }
+            Plugs.Add((Plug)model);
             return true;
         }
     }
