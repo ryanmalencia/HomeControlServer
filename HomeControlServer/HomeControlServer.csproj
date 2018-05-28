@@ -194,6 +194,7 @@
     <Compile Include="Interfaces\IModel.cs" />
     <Compile Include="Logic\PlugLogic.cs" />
     <Compile Include="Models\Device.cs" />
+    <Compile Include="Models\DeviceCollection.cs" />
     <Compile Include="Models\Plug.cs" />
     <Compile Include="Models\PlugCollection.cs" />
     <Compile Include="NetworkInteraction\NetworkClient.cs" />
