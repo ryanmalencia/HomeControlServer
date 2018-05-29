@@ -197,6 +197,8 @@
     <Compile Include="Models\DeviceCollection.cs" />
     <Compile Include="Models\Plug.cs" />
     <Compile Include="Models\PlugCollection.cs" />
+    <Compile Include="Models\Switch.cs" />
+    <Compile Include="Models\SwitchCollection.cs" />
     <Compile Include="NetworkInteraction\NetworkClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SignalR\PlugStatus.cs" />
