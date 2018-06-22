@@ -2,30 +2,96 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+@section scripts{
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/Scripts/jquery-3.3.1.min.js")
+    @Scripts.Render("~/Scripts/jquery.signalR-2.2.3.js")
+    @Scripts.Render("~/Scripts/jqxcore.js")
+    @Scripts.Render("~/Scripts/jqxdata.js")
+    @Scripts.Render("~/Scripts/jqxdate.js")
+    @Scripts.Render("~/Scripts/jqxmenu.js")
+    @Scripts.Render("~/Scripts/jqxbuttons.js")
+    @Scripts.Render("~/Scripts/jqxdropdownlist.js")
+    @Scripts.Render("~/Scripts/jqxdropdownbutton.js")
+    @Scripts.Render("~/Scripts/jqxlistbox.js")
+    @Scripts.Render("~/Scripts/jqxpanel.js")
+    @Scripts.Render("~/Scripts/jqxscrollbar.js")
+    @Scripts.Render("~/Scripts/jqxinput.js")
+    @Scripts.Render("~/Scripts/jqxgrid.js")
+    @Scripts.Render("~/Scripts/jqxgrid.aggregates.js")
+    @Scripts.Render("~/Scripts/jqxgrid.columnsresize.js")
+    @Scripts.Render("~/Scripts/jqxgrid.columnsreorder.js")
+    @Scripts.Render("~/Scripts/jqxgrid.edit.js")
+    @Scripts.Render("~/Scripts/jqxgrid.export.js")
+    @Scripts.Render("~/Scripts/jqxgrid.filter.js")
+    @Scripts.Render("~/Scripts/jqxgrid.grouping.js")
+    @Scripts.Render("~/Scripts/jqxgrid.pager.js")
+    @Scripts.Render("~/Scripts/jqxgrid.selection.js")
+    @Scripts.Render("~/Scripts/jqxgrid.sort.js")
+    @Scripts.Render("~/Scripts/jqxgrid.storage.js")
+
+    <script type="text/javascript">
+        $(function () {
+            $.getJSON('http://10.0.0.136:3000/api/plug/get/all', function (data) {
+                var response = JSON.parse(data);
+                populateTable(response);
+            });
+        });
+
+        function populateTable(data) {
+
+        }
+    </script>
+}
+
+<html>
+<head>
+    <title>HomeControlServer</title>
+    <link rel="stylesheet" href="~/Styles/jqx.base.css" type="text/css" />
+</head>
+
+<body>
+    <h1>Activity</h1>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <table id="newAccount">
+                <tr>
+                    <td colspan="2"><h2>New Transaction</h2><br /><br /></td>
+                </tr>
+                <tr>
+                    <td>Account: </td>
+                    <td><div id="transactionAccount" style="margin: 0 auto;"></div></td>
+                </tr>
+                <tr>
+                    <td>Type: </td>
+                    <td><div id="transactionType" style="margin: 0 auto;"></div></td>
+                </tr>
+                <tr>
+                    <td>Description: </td>
+                    <td><input type="text" id="transactionDescription" /></td>
+                </tr>
+                <tr>
+                    <td>Amount: </td>
+                    <td><input type="text" id="transactionAmount" /></td>
+                </tr>
+                <tr>
+                    <td>Date: </td>
+                    <td><input type="text" id="transactionDate" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><br /><button id="submitRowButton" onclick="submitRow()">Create Transaction</button></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="display:none;" id="addLoading"><img src="~/Images/loading.gif" /></td>
+                </tr>
+            </table>
+            <br />
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+    <br />
+    <br />
+    <div id="mainGrid" style="opacity:.99;"></div>
+</body>
+</html>
