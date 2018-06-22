@@ -22,5 +22,10 @@ namespace HomeControlServer.Controllers
 
             return View();
         }
+
+        public ActionResult Plug()
+        {
+            return View();
+        }
     }
 }

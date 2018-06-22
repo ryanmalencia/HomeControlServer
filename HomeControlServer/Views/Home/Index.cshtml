@@ -32,15 +32,74 @@
     @Scripts.Render("~/Scripts/jqxgrid.storage.js")
 
     <script type="text/javascript">
+        columnNames = ["PlugID", "Name", "IP", "View"];
+        fieldNames = ["PlugID", "Name", "IP", "View"];
+
         $(function () {
             $.getJSON('http://10.0.0.136:3000/api/plug/get/all', function (data) {
-                var response = JSON.parse(data);
-                populateTable(response);
+                for (var i = 0; i < data.Plugs.length; i++) {
+                    data.Plugs[i].View = "View";
+                }
+                populateTable(data);
             });
         });
 
         function populateTable(data) {
+            gridSource =
+            {
+                datatype: "array",
+                datafields: [
+                    { name: fieldNames[0], type: 'string' },
+                    { name: fieldNames[1], type: 'string' },
+                    { name: fieldNames[2], type: 'string' },
+                    { name: fieldNames[3], type: 'string' }
+                ],
+                localdata: data.Plugs
+            };
+            var mainGridDataAdapter = new $.jqx.dataAdapter(gridSource, {
+                autoBind: true, async: false
+            });
+            var mainGrid = $('#mainGrid');
+            showGrid(mainGrid, mainGridDataAdapter);
+        }
 
+        function showGrid(mainGrid, mainGridDataAdapter) {
+            mainGrid.jqxGrid(
+            {
+                width: '100%',
+                source: mainGridDataAdapter,
+                selectionmode: 'multiplerowsextended',
+                sortable: false,
+                pageable: false,
+                editable: true,
+                autoheight: true,
+                autoloadstate: false,
+                autosavestate: false,
+                columnsresize: true,
+                columnsreorder: false,
+                showfilterrow: false,
+                enabletooltips: true,
+                filterable: false,
+                filterrowheight: 25,
+                rowsheight: 25,
+                columnsheight: 18,
+                columns: [
+                    { text: columnNames[0], datafield: fieldNames[0], width: '10%', hidden: true, align: 'center', cellsalign: 'center' },
+                    { text: columnNames[1], datafield: fieldNames[1], width: '30%', hidden: true, align: 'center', cellsalign: 'center' },
+                    { text: columnNames[2], datafield: fieldNames[2], width: '30%', hidden: true, align: 'center', cellsalign: 'center' },
+                    {
+                        text: columnNames[3], datafield: fieldNames[3], width: '30%', hidden: true, align: 'center', cellsalign: 'center',
+                        createeditor: function (row, cellvalue, editor, celltext, pressedChar) {
+                            var data = $('#mainGrid').jqxGrid('getrowdata', row);
+                            window.location.href = 'http://10.0.0.136:3000/Home/Plug?PlugID=' + data.PlugID;
+                        }
+                    },
+                ]
+            });
+
+            for (var i = 0; i < fieldNames.length; i++) {
+                mainGrid.jqxGrid('showcolumn', fieldNames[i]);
+            }
         }
     </script>
 }
@@ -52,46 +111,7 @@
 </head>
 
 <body>
-    <h1>Activity</h1>
-    <div id="myModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <table id="newAccount">
-                <tr>
-                    <td colspan="2"><h2>New Transaction</h2><br /><br /></td>
-                </tr>
-                <tr>
-                    <td>Account: </td>
-                    <td><div id="transactionAccount" style="margin: 0 auto;"></div></td>
-                </tr>
-                <tr>
-                    <td>Type: </td>
-                    <td><div id="transactionType" style="margin: 0 auto;"></div></td>
-                </tr>
-                <tr>
-                    <td>Description: </td>
-                    <td><input type="text" id="transactionDescription" /></td>
-                </tr>
-                <tr>
-                    <td>Amount: </td>
-                    <td><input type="text" id="transactionAmount" /></td>
-                </tr>
-                <tr>
-                    <td>Date: </td>
-                    <td><input type="text" id="transactionDate" /></td>
-                </tr>
-                <tr>
-                    <td colspan="2"><br /><button id="submitRowButton" onclick="submitRow()">Create Transaction</button></td>
-                </tr>
-                <tr>
-                    <td colspan="2" style="display:none;" id="addLoading"><img src="~/Images/loading.gif" /></td>
-                </tr>
-            </table>
-            <br />
-        </div>
-    </div>
-    <br />
-    <br />
+    <h1>Devices</h1>
     <div id="mainGrid" style="opacity:.99;"></div>
 </body>
 </html>
