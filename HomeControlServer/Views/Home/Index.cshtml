@@ -32,14 +32,14 @@
     @Scripts.Render("~/Scripts/jqxgrid.storage.js")
 
     <script type="text/javascript">
-        columnNames = ["PlugID", "Name", "IP", "View"];
-        fieldNames = ["PlugID", "Name", "IP", "View"];
+        var columnNames = ["PlugID", "Name", "IP", "Plug1", "Plug2"];
+        var fieldNames = ["PlugID", "Name", "IP", "Plug1", "Plug2"];
+        var one = false;
+        var two = false;
+
 
         $(function () {
             $.getJSON('http://10.0.0.136:3000/api/plug/get/all', function (data) {
-                for (var i = 0; i < data.Plugs.length; i++) {
-                    data.Plugs[i].View = "View";
-                }
                 populateTable(data);
             });
         });
@@ -51,8 +51,7 @@
                 datafields: [
                     { name: fieldNames[0], type: 'string' },
                     { name: fieldNames[1], type: 'string' },
-                    { name: fieldNames[2], type: 'string' },
-                    { name: fieldNames[3], type: 'string' }
+                    { name: fieldNames[2], type: 'string' }
                 ],
                 localdata: data.Plugs
             };
@@ -63,7 +62,46 @@
             showGrid(mainGrid, mainGridDataAdapter);
         }
 
+        function viewPlug() {
+
+        }
+
         function showGrid(mainGrid, mainGridDataAdapter) {
+
+            var cellsrenderer1 = function (row, column, value, defaultHtml, columnSettings, rowData) {
+                $.getJSON('http://10.0.0.136:3000/api/plug/get/status/' + rowData.PlugID, function (data) {
+                    data = JSON.parse(data);
+                    if (!data.status1) {
+                        $('#toggleone').removeClass('oneoff');
+                        $('#toggleone').addClass('oneon');
+                        $('#toggleone')[0].value = "On";
+                    }
+                    else {
+                        $('#toggleone').addClass('oneoff');
+                        $('#toggleone').removeClass('oneon');
+                        $('#toggleone')[0].value = "Off";
+                    }
+                });
+                return '<input id="toggleone" type="button" value="Off" onclick="toggleOne()" style="width:100%;height:100%" class="oneoff"/>';
+            };
+
+            var cellsrenderer2 = function (row, column, value, defaultHtml, columnSettings, rowData) {
+                $.getJSON('http://10.0.0.136:3000/api/plug/get/status/' + rowData.PlugID, function (data) {
+                    data = JSON.parse(data);
+                    if (!data.status2) {
+                        $('#toggletwo').removeClass('twooff');
+                        $('#toggletwo').addClass('twoon');
+                        $('#toggletwo')[0].value = "On";
+                    }
+                    else {
+                        $('#toggletwo').addClass('twooff');
+                        $('#toggletwo').removeClass('twoon');
+                        $('#toggletwo')[0].value= "Off";
+                    }
+                });
+                return '<input id="toggletwo" type="button" value="Off" onclick="toggleTwo()" style="width:100%;height:100%" class="twooff"/>';
+            };
+
             mainGrid.jqxGrid(
             {
                 width: '100%',
@@ -71,7 +109,7 @@
                 selectionmode: 'multiplerowsextended',
                 sortable: false,
                 pageable: false,
-                editable: true,
+                editable: false,
                 autoheight: true,
                 autoloadstate: false,
                 autosavestate: false,
@@ -87,13 +125,8 @@
                     { text: columnNames[0], datafield: fieldNames[0], width: '10%', hidden: true, align: 'center', cellsalign: 'center' },
                     { text: columnNames[1], datafield: fieldNames[1], width: '30%', hidden: true, align: 'center', cellsalign: 'center' },
                     { text: columnNames[2], datafield: fieldNames[2], width: '30%', hidden: true, align: 'center', cellsalign: 'center' },
-                    {
-                        text: columnNames[3], datafield: fieldNames[3], width: '30%', hidden: true, align: 'center', cellsalign: 'center',
-                        createeditor: function (row, cellvalue, editor, celltext, pressedChar) {
-                            var data = $('#mainGrid').jqxGrid('getrowdata', row);
-                            window.location.href = 'http://10.0.0.136:3000/Home/Plug?PlugID=' + data.PlugID;
-                        }
-                    },
+                    { text: columnNames[3], datafield: fieldNames[3], width: '15%', hidden: true, align: 'center', cellsrenderer: cellsrenderer1 },
+                    { text: columnNames[4], datafield: fieldNames[4], width: '15%', hidden: true, align: 'center', cellsrenderer: cellsrenderer2 }
                 ]
             });
 
@@ -103,6 +136,90 @@
         }
     </script>
 }
+
+<style>
+    table {
+        width: 100%;
+    }
+
+    td {
+        text-align: center;
+        vertical-align: middle;
+        padding: 5px;
+    }
+
+    th {
+        text-align: center;
+        vertical-align: middle;
+        padding: 5px;
+    }
+
+    #table-wrapper {
+        position: relative;
+    }
+
+    #table-scroll {
+        height: 300px;
+        overflow: auto;
+    }
+
+    #table-wrapper table {
+        width: 100%;
+    }
+
+    .oneoff {
+        background-color: red;
+    }
+
+    .oneon {
+        background-color: green;
+    }
+
+    .twooff {
+        background-color: red;
+    }
+
+    .twoon {
+        background-color: green;
+    }
+
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content/Box */
+    .modal-content {
+        background-color: #fefefe;
+        margin: 10% auto; /* 15% from the top and centered */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 400px; /* Could be more or less, depending on screen size */
+    }
+
+    /* The Close Button */
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+</style>
 
 <html>
 <head>
