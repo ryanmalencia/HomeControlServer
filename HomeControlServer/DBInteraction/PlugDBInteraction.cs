@@ -115,6 +115,10 @@ namespace HomeControlServer.DBInteraction
             {
                 string http = "http://" + plug.IP + call;
                 returnString = NetworkClient.GetResponse(http, "GET");
+                if(returnString == http)
+                {
+                    return "{}";
+                }
             }
             return returnString;
         }

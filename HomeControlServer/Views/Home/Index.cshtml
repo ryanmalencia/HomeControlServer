@@ -62,8 +62,70 @@
             showGrid(mainGrid, mainGridDataAdapter);
         }
 
-        function viewPlug() {
+        function viewPlug(id) {
 
+        }
+
+        function toggleOne(id) {
+            if ($('#toggleone' + id).hasClass('oneoff')) {
+                $.ajax({
+                    url: 'http://10.0.0.136:3000/api/plug/turnoneon/' + id,
+                    type: "POST",
+                    success: function (data, textStatus, jqXHR) {
+                        $('#toggleone' + id).addClass('oneon');
+                        $('#toggleone' + id).removeClass('oneoff');
+                        $('#toggleone' + id)[0].value = "On";
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+
+                    }
+                });
+            }
+            else {
+                $.ajax({
+                    url: 'http://10.0.0.136:3000/api/plug/turnoneoff/' + id,
+                    type: "POST",
+                    success: function (data, textStatus, jqXHR) {
+                        $('#toggleone' + id).removeClass('oneon');
+                        $('#toggleone' + id).addClass('oneoff');
+                        $('#toggleone' + id)[0].value = "Off";
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+
+                    }
+                });
+            }
+        }
+
+        function toggleTwo(id) {
+            if ($('#toggletwo' + id).hasClass('twooff')) {
+                $.ajax({
+                    url: 'http://10.0.0.136:3000/api/plug/turntwoon/' + id,
+                    type: "POST",
+                    success: function (data, textStatus, jqXHR) {
+                        $('#toggletwo' + id).addClass('twoon');
+                        $('#toggletwo' + id).removeClass('twooff');
+                        $('#toggletwo' + id)[0].value = "On";
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+
+                    }
+                });
+            }
+            else {
+                $.ajax({
+                    url: 'http://10.0.0.136:3000/api/plug/turntwooff/' + id,
+                    type: "POST",
+                    success: function (data, textStatus, jqXHR) {
+                        $('#toggletwo' + id).removeClass('twoon');
+                        $('#toggletwo' + id).addClass('twooff');
+                        $('#toggletwo' + id)[0].value = "Off";
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+
+                    }
+                });
+            }
         }
 
         function showGrid(mainGrid, mainGridDataAdapter) {
@@ -71,35 +133,35 @@
             var cellsrenderer1 = function (row, column, value, defaultHtml, columnSettings, rowData) {
                 $.getJSON('http://10.0.0.136:3000/api/plug/get/status/' + rowData.PlugID, function (data) {
                     data = JSON.parse(data);
-                    if (!data.status1) {
-                        $('#toggleone').removeClass('oneoff');
-                        $('#toggleone').addClass('oneon');
-                        $('#toggleone')[0].value = "On";
+                    if (data.status1) {
+                        $('#toggleone' + rowData.PlugID).removeClass('oneoff');
+                        $('#toggleone' + rowData.PlugID).addClass('oneon');
+                        $('#toggleone' + rowData.PlugID)[0].value = "On";
                     }
                     else {
-                        $('#toggleone').addClass('oneoff');
-                        $('#toggleone').removeClass('oneon');
-                        $('#toggleone')[0].value = "Off";
+                        $('#toggleone' + rowData.PlugID).addClass('oneoff');
+                        $('#toggleone' + rowData.PlugID).removeClass('oneon');
+                        $('#toggleone' + rowData.PlugID)[0].value = "Off";
                     }
                 });
-                return '<input id="toggleone" type="button" value="Off" onclick="toggleOne()" style="width:100%;height:100%" class="oneoff"/>';
+                return '<input id="toggleone' + rowData.PlugID + '" type="button" value="Off" onclick="toggleOne(' + rowData.PlugID + ')" style="width:100%;height:100%" class="oneoff"/>';
             };
 
             var cellsrenderer2 = function (row, column, value, defaultHtml, columnSettings, rowData) {
                 $.getJSON('http://10.0.0.136:3000/api/plug/get/status/' + rowData.PlugID, function (data) {
                     data = JSON.parse(data);
-                    if (!data.status2) {
-                        $('#toggletwo').removeClass('twooff');
-                        $('#toggletwo').addClass('twoon');
-                        $('#toggletwo')[0].value = "On";
+                    if (data.status2) {
+                        $('#toggletwo' + rowData.PlugID).removeClass('twooff');
+                        $('#toggletwo' + rowData.PlugID).addClass('twoon');
+                        $('#toggletwo' + rowData.PlugID)[0].value = "On";
                     }
                     else {
-                        $('#toggletwo').addClass('twooff');
-                        $('#toggletwo').removeClass('twoon');
-                        $('#toggletwo')[0].value= "Off";
+                        $('#toggletwo' + rowData.PlugID).addClass('twooff');
+                        $('#toggletwo' + rowData.PlugID).removeClass('twoon');
+                        $('#toggletwo' + rowData.PlugID)[0].value= "Off";
                     }
                 });
-                return '<input id="toggletwo" type="button" value="Off" onclick="toggleTwo()" style="width:100%;height:100%" class="twooff"/>';
+                return '<input id="toggletwo' + rowData.PlugID + '" type="button" value="Off" onclick="toggleTwo(' + rowData.PlugID + ')" style="width:100%;height:100%" class="twooff"/>';
             };
 
             mainGrid.jqxGrid(
